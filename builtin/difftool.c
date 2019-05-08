@@ -726,9 +726,15 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
 	if (tool_help)
 		return print_tool_help();
 
-	/* NEEDSWORK: once we no longer spawn anything, remove this */
-	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+	if (!no_index && !startup_info->have_repository)
+		die(_("difftool requires worktree or --no-index"));
+
+	if (!no_index){
+		setup_work_tree();
+		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
+		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+	} else if (dir_diff)
+		die(_("--dir-diff is incompatible with --no-index"));
 
 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
