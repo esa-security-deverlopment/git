@@ -710,7 +710,7 @@ test_expect_success 'outside worktree' '
 	echo 2 >2 &&
 	test_expect_code 1 nongit git \
 		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
-		difftool --no-prompt --no-index --ext-diff ../1 ../2 >actual &&
+		difftool --no-prompt --no-index ../1 ../2 >actual &&
 	echo "../1 ../2" >expect &&
 	test_cmp expect actual
 '
