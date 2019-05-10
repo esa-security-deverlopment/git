@@ -295,9 +295,9 @@ int delayed_reachability_test(struct shallow_info *si, int c);
 void prune_shallow(unsigned options);
 extern struct trace_key trace_shallow;
 
-extern int interactive_add(int argc, const char **argv, const char *prefix,
-			   const char *patch_mode);
-extern int run_add_interactive(const char *revision, const char *patch_mode,
+int interactive_add(int argc, const char **argv, const char *prefix,
+		    const char *patch_mode);
+int run_add_interactive(const char *revision, const char *patch_mode,
 			const struct pathspec *pathspec);
 
 struct commit_extra_header {
